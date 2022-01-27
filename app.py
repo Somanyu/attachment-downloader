@@ -2,8 +2,8 @@ import imaplib
 import email
 import os
 
-USEREMAIL = 'anything@mail.com'
-USERPASS = 'anythingpass'
+USEREMAIL = 'example@mail.com'
+USERPASS = 'Example000'
 
 def downloadAttachment():
 
@@ -16,30 +16,31 @@ def downloadAttachment():
     mails = len(data[0].split())
 
     for i in range(mails):
-        latestEmailUID = data[0].split()[x]
+        latestEmailUID = data[0].split()[i]
         result, emailData = mail.uid('fetch', latestEmailUID, '(RFC822)')
 
         rawEmail = emailData[0][1]
         rawEmailString = rawEmail.decode('utf-8')
         emailMessage = email.message_from_string(rawEmailString)
 
-        for attach in emailMessage.walk():
+        for content in emailMessage.walk():
             if content.get_content_maintype() == 'multipart':
                 continue
             if content.get('Content-Disposition') is None:
                 continue
             fileName = content.get_filename()
+            fromEmail = emailMessage['from']
 
             if bool(fileName):
                 if (fileName.endswith(".pdf")):
-                    if (fileName.startwith('SOMETHING')):
+                    if (fileName.startswith('SOMETHING')):
+                        cwd = os.getcwd()
                         filePath = os.path.join('PATH', fileName)
-                        if not os.path.isFile(filePath):
+                        if not os.path.isfile(filePath):
                             fileWrite = open(filePath, 'wb')
                             fileWrite.write(content.get_payload(decode=True))
                             fileWrite.close()
-                        cwd = os.getcwd()
                         uid = latestEmailUID.decode('utf-8')
-                        print(f'Downloaded "{fileName}" in "{cwd}" with UID "{uid}"')
+                        print(f'Downloaded "{fileName}" in "{cwd}\\download" from "{fromEmail}" with UID "{uid}"')
 
 downloadAttachment()
