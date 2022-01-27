@@ -1,2 +1,2 @@
 # attachment-downloader
-Download attachments from gmail using python's imap and mail library
+Download attachments from gmail using python's imap and email library
