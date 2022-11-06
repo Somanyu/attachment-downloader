@@ -1,0 +1,19 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MariaDB",
+      "name": "localhost",
+      "database": "destination",
+      "username": "root@localhost",
+      "password": ""
+    }
+  ],
+  "python.formatting.provider": "black",
+  "python.linting.enabled": false
+}
